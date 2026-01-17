@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/react-hooks-telephone-book/static/css/main.31d6cfe0.css",
-    "main.js": "/react-hooks-telephone-book/static/js/main.94ac7304.js",
+    "main.js": "/react-hooks-telephone-book/static/js/main.045981f9.js",
     "index.html": "/react-hooks-telephone-book/index.html",
-    "main.94ac7304.js.map": "/react-hooks-telephone-book/static/js/main.94ac7304.js.map"
+    "main.045981f9.js.map": "/react-hooks-telephone-book/static/js/main.045981f9.js.map"
   },
   "entrypoints": [
     "static/css/main.31d6cfe0.css",
-    "static/js/main.94ac7304.js"
+    "static/js/main.045981f9.js"
   ]
 }
