@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 const Form = styled.form`
   display: flex;
@@ -55,15 +55,22 @@ const Button = styled.button`
 export default function ContactForm({ onAdd }) {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
+  const nameInputRef = useRef(null)
+  const numberInputRef = useRef(null)
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const trimmed = name.trim()
-    if (!trimmed) return
+    if (!trimmed) {
+      nameInputRef.current?.focus()
+      return
+    }
     const newContact = { name: trimmed, number }
     const added = onAdd(newContact)
     if (added) {
       setName('')
       setNumber('')
+      nameInputRef.current?.focus()
     }
   }
   return (
@@ -71,6 +78,7 @@ export default function ContactForm({ onAdd }) {
       <Label>
         Ім'я
         <Input
+          ref={nameInputRef}
           type="text"
           name="name"
           value={name}
@@ -83,6 +91,7 @@ export default function ContactForm({ onAdd }) {
       <Label>
         Номер
         <Input
+          ref={numberInputRef}
           type="tel"
           name="number"
           value={number}
