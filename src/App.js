@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import styled from 'styled-components'
 import ContactForm from './components/ContactForm/ContactForm'
@@ -33,11 +33,8 @@ export default function App() {
     setFilter(value)
   }
 
-  const visible = useMemo(() => {
-    const normalized = filter.trim().toLowerCase()
-    if (!normalized) return contacts
-    return contacts.filter(c => c.name.toLowerCase().includes(normalized))
-  }, [contacts, filter])
+  const normalized = filter.trim().toLowerCase()
+  const visible = !normalized ? contacts : contacts.filter(c => c.name.toLowerCase().includes(normalized))
 
   return (
     <Container>
