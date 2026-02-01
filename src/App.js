@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React, { createContext, useState } from 'react';
 import './App.css';
 import styled from 'styled-components'
 import ContactForm from './components/ContactForm/ContactForm'
 import ContactList from './components/ContactList/ContactList'
 import Filter from './components/Filter/Filter'
-const Container = styled.div`
-  padding: 20px;
-  font-family: sans-serif;
-`
+export const ContactsContext = createContext(null)
 
-export default function App() {
+export function ContactsProvider({ children }) {
   const [contacts, setContacts] = useState([])
   const [filter, setFilter] = useState('')
 
@@ -29,20 +26,28 @@ export default function App() {
     setContacts(prev => prev.filter(c => c.id !== id))
   }
 
-  const changeFilter = (value) => {
-    setFilter(value)
-  }
-
-  const normalized = filter.trim().toLowerCase()
-  const visible = !normalized ? contacts : contacts.filter(c => c.name.toLowerCase().includes(normalized))
-
   return (
-    <Container>
-      <h1>Телефонна книга</h1>
-      <ContactForm onAdd={addContact} />
-      <h2>Контакти</h2>
-      <Filter filter={filter} onChange={changeFilter} />
-      <ContactList contacts={visible} onDelete={deleteContact} />
-    </Container>
+    <ContactsContext.Provider value={{ contacts, addContact, deleteContact, filter, setFilter }}>
+      {children}
+    </ContactsContext.Provider>
+  )
+}
+
+const Container = styled.div`
+  padding: 20px;
+  font-family: sans-serif;
+`
+
+export default function App() {
+  return (
+    <ContactsProvider>
+      <Container>
+        <h1>Телефонна книга</h1>
+        <ContactForm Ctx={ContactsContext} />
+        <h2>Контакти</h2>
+        <Filter Ctx={ContactsContext} />
+        <ContactList Ctx={ContactsContext} />
+      </Container>
+    </ContactsProvider>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import styled from 'styled-components'
 const Form = styled.form`
   display: flex;
@@ -52,11 +52,12 @@ const Button = styled.button`
     transform: translate(-50%, -50%) scale(1.05);
   }
 `
-export default function ContactForm({ onAdd }) {
+export default function ContactForm({ Ctx }) {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
   const nameInputRef = useRef(null)
   const numberInputRef = useRef(null)
+  const { addContact } = useContext(Ctx)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -66,7 +67,7 @@ export default function ContactForm({ onAdd }) {
       return
     }
     const newContact = { name: trimmed, number }
-    const added = onAdd(newContact)
+    const added = addContact(newContact)
     if (added) {
       setName('')
       setNumber('')
